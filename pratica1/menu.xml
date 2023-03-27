@@ -26,9 +26,18 @@
     <menuitem label='Cadastros'>
         <icon>fa:home fa-fw</icon>
         <menu>
-            <menuitem label='Categoria'>
+            <menuitem label='Nova Categoria'>
                 <icon>fa:life-ring fa-fw</icon>
                 <action>CategoriaView</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='Vizualiar'>
+        <icon>fa:home fa-fw</icon>
+        <menu>
+            <menuitem label='Vizualizar Categorias'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>VisCategoriaView</action>
             </menuitem>
         </menu>
     </menuitem>
