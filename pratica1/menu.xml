@@ -32,15 +32,7 @@
             </menuitem>
         </menu>
     </menuitem>
-    <menuitem label='Vizualiar'>
-        <icon>fa:home fa-fw</icon>
-        <menu>
-            <menuitem label='Vizualizar Categorias'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>VisCategoriaView</action>
-            </menuitem>
-        </menu>
-    </menuitem>
+   
     <menuitem label='Configuração'>
         <icon>fa:cog fa-fw</icon>
         <menu>
