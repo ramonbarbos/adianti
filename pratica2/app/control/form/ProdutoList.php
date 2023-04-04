@@ -35,7 +35,7 @@ class ProdutoList extends TPage
 
         $col_id = new TDataGridColumn('sq_produto', 'Código', 'right', '10%');
         $col_nome = new TDataGridColumn('nm_produto', 'Nome', 'left', '40%');
-        $col_unid = new TDataGridColumn('sq_unidade', 'UNI', 'left', '40%');
+        $col_unid = new TDataGridColumn('unidade->sigla', 'Unid.', 'left', '40%');
         $col_grupo = new TDataGridColumn('cd_grupo', 'Grupo', 'center', '10%');
         #$col_estado = new TDataGridColumn('estado->nome', 'Estado', 'center', '30%');
 

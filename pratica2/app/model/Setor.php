@@ -16,6 +16,7 @@ class Setor extends TRecord {
         parent::addAttribute('dt_desativacao');
         parent::addAttribute('ds_endereco');
     }
+    
 }
 
 ?>

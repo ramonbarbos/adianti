@@ -14,6 +14,7 @@ class Unidade extends TRecord {
         parent::addAttribute('nome_unidade');
         parent::addAttribute('sigla');
     }
+    
 }
 
 ?>
