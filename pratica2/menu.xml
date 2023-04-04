@@ -30,6 +30,10 @@
                 <icon>fa:life-ring fa-fw</icon>
                 <action>ProdutoView</action>
             </menuitem>
+            <menuitem label='Setor'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>SetorView</action>
+            </menuitem>
         </menu>
     </menuitem>
    
