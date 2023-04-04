@@ -16,17 +16,18 @@ use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Dialog\TQuestion;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 use Adianti\Control\TWindow;
-class ProdutoList extends TWindow
+
+class ProdutoList extends TPage
 {
     private $datagrid;
     private $pageNavigation;
     private $loaded;
+    private $form;
     
     public function __construct(){
 
         parent::__construct();
 
-        parent::setTitle("Listagem de Produtos");
 
 
         $this->datagrid =  new BootstrapDatagridWrapper(new TDataGrid);
@@ -50,7 +51,7 @@ class ProdutoList extends TWindow
         $action1 =  new TDataGridAction( ['ProdutoView' , 'onEdit'] , ['key' => '{sq_produto}']);
         $action2 =  new TDataGridAction([ $this, 'onDelete'], ['key' => '{sq_produto}']) ;
 
-        #$action3 = new TDataAction
+      
 
         $this->datagrid->addAction($action1, 'Editar');
         $this->datagrid->addAction($action2, 'Excluir');
@@ -61,16 +62,26 @@ class ProdutoList extends TWindow
         $this->pageNavigation = new TPageNavigation;
         $this->pageNavigation->setAction( new TAction([$this, 'onReload']));
 
+        $this->pageNavigation->setAction('Voltar', new TAction( [$this, 'onForm']));
 
 
         $panel = new TPanelGroup;
         $panel->add($this->datagrid);
+        $panel->add($this->form);
         $panel->addFooter($this->pageNavigation);
 
        parent::add($panel);
 
        
 
+    }
+      //Cadastro
+      public  function onForm($param){
+
+        AdiantiCoreApplication::loadPage('ProdutoView');
+      
+       
+     
     }
 
      //Limpeza de Formulario

@@ -52,11 +52,12 @@ class ProdutoView extends TPage
 
        $nm_produto->addValidation('Nome', new TRequiredValidator);
 
+
        $this->form->addAction('Salvar', new TAction( [$this, 'onSave'])); //POST
        $this->form->addActionLink('Limpar', new TAction( [$this, 'onClear']));
-       $this->form->addActionLink('Lista', new TAction( [$this, 'onList']));
+       $this->form->addActionLink('Listar', new TAction( [$this, 'onList']));
 
-       
+    
 
        parent::add($this->form);
 
@@ -99,6 +100,14 @@ class ProdutoView extends TPage
         $this->form->clear(true);
      
     }
+     //Lista
+     public  function onList($param){
+
+        AdiantiCoreApplication::loadPage('ProdutoList');
+      
+       
+     
+    }
 
     //Medoto de edição
     public  function onEdit($param){
@@ -128,10 +137,5 @@ class ProdutoView extends TPage
      
     }
 
-     //Listagem
-     public  function onList($param){
-
-        header("location: class=ProdutoView");
-     
-    }
+    
 }
