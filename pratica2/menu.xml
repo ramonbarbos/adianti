@@ -44,7 +44,14 @@
                 <icon>fa:cube fa-fw</icon>
                 <action>OrgaoView</action>
             </menuitem>
-            
+               <menuitem label='Unidade Orçamentaria'>
+                <icon>fa:cube fa-fw</icon>
+                <action>UnidOrcamentariaView</action>
+            </menuitem>
+             <menuitem label='Estrutura Organizacional'>
+                <icon>fa:cube fa-fw</icon>
+                <action>Estrutura</action>
+            </menuitem>
            
         </menu>
     </menuitem>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 06-Abr-2023 às 15:26
+-- Tempo de geração: 06-Abr-2023 às 19:55
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `orgao` (
 --
 
 INSERT INTO `orgao` (`nu_cnpj`, `cd_orgao`, `dt_ano`, `nm_orgao`, `tp_poder`, `nu_telefone`, `ds_email`, `dt_anoMes`) VALUES
-('00642856000160', '01', 2023, 'Câmera Municipal', '1', '99999999', 'teste@gmail.com', '202304');
+('00642856000160', '01', 2023, 'Câmera Municipal', '2', '99999999', 'teste@gmail.com', '202304');
 
 -- --------------------------------------------------------
 
@@ -123,6 +123,30 @@ INSERT INTO `setor` (`nu_cnpj`, `sq_setor`, `nm_setor`, `dt_desativacao`, `ds_en
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `setor_orgao_unid`
+--
+
+DROP TABLE IF EXISTS `setor_orgao_unid`;
+CREATE TABLE IF NOT EXISTS `setor_orgao_unid` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nu_cnpj` varchar(14) NOT NULL,
+  `sq_setor` int NOT NULL,
+  `dt_ano` year NOT NULL,
+  `cd_orgao` varchar(6) NOT NULL,
+  `cd_unidOrcamentaria` varchar(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `setor_orgao_unid`
+--
+
+INSERT INTO `setor_orgao_unid` (`id`, `nu_cnpj`, `sq_setor`, `dt_ano`, `cd_orgao`, `cd_unidOrcamentaria`) VALUES
+(4, '00642856000160', 1, 2023, '01', '0101');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `unidade`
 --
 
@@ -155,14 +179,19 @@ CREATE TABLE IF NOT EXISTS `unid_orcamentaria` (
   `cd_unidOrcamentaria` varchar(5) NOT NULL,
   `dt_ano` year NOT NULL,
   `nm_unidOrcamentaria` varchar(120) NOT NULL,
-  `tp_poder` char(1) NOT NULL,
   `nu_telefone` varchar(15) NOT NULL,
   `ds_email` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `dt_anoMes` date NOT NULL,
-  `nu_cpfFunc` varchar(11) NOT NULL,
-  `nu_matricula` varchar(20) NOT NULL,
+  `dt_anoMes` varchar(6) NOT NULL,
   PRIMARY KEY (`cd_unidOrcamentaria`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `unid_orcamentaria`
+--
+
+INSERT INTO `unid_orcamentaria` (`nu_cnpj`, `cd_unidOrcamentaria`, `dt_ano`, `nm_unidOrcamentaria`, `nu_telefone`, `ds_email`, `dt_anoMes`) VALUES
+('00642856000160', '01', 2023, 'Camara Municipal', '99999999', 'teste@gmail.com', '202304'),
+('00642856000160', '0101', 2023, 'Camara Municipal', '99999999', 'teste@gmail.com', '202304');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
