@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 04-Abr-2023 às 21:08
+-- Tempo de geração: 06-Abr-2023 às 15:26
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -47,6 +47,31 @@ INSERT INTO `grupo` (`id`, `cd_grupo`, `nm_grupo`, `ds_grupo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `orgao`
+--
+
+DROP TABLE IF EXISTS `orgao`;
+CREATE TABLE IF NOT EXISTS `orgao` (
+  `nu_cnpj` varchar(14) NOT NULL,
+  `cd_orgao` varchar(5) NOT NULL,
+  `dt_ano` year NOT NULL,
+  `nm_orgao` varchar(120) NOT NULL,
+  `tp_poder` char(1) NOT NULL,
+  `nu_telefone` varchar(15) NOT NULL,
+  `ds_email` varchar(120) NOT NULL,
+  `dt_anoMes` varchar(6) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `orgao`
+--
+
+INSERT INTO `orgao` (`nu_cnpj`, `cd_orgao`, `dt_ano`, `nm_orgao`, `tp_poder`, `nu_telefone`, `ds_email`, `dt_anoMes`) VALUES
+('00642856000160', '01', 2023, 'Câmera Municipal', '1', '99999999', 'teste@gmail.com', '202304');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `produto`
 --
 
@@ -61,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `produto` (
   `dt_cadastro` datetime NOT NULL,
   `dt_desativacao` datetime NOT NULL,
   PRIMARY KEY (`sq_produto`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `produto`
@@ -93,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `setor` (
 --
 
 INSERT INTO `setor` (`nu_cnpj`, `sq_setor`, `nm_setor`, `dt_desativacao`, `ds_endereco`) VALUES
-('', 1, 'Secretaria de Edu', '0000-00-00 00:00:00', '');
+('00642856000160', 1, 'Secretaria de Educação', '0000-00-00 00:00:00', 'Município Teste ');
 
 -- --------------------------------------------------------
 
@@ -117,6 +142,27 @@ INSERT INTO `unidade` (`id`, `nome_unidade`, `sigla`) VALUES
 (1, 'Ampola', 'AMP'),
 (2, 'Barra', 'BAR'),
 (3, 'Unidade', 'UND');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `unid_orcamentaria`
+--
+
+DROP TABLE IF EXISTS `unid_orcamentaria`;
+CREATE TABLE IF NOT EXISTS `unid_orcamentaria` (
+  `nu_cnpj` varchar(14) NOT NULL,
+  `cd_unidOrcamentaria` varchar(5) NOT NULL,
+  `dt_ano` year NOT NULL,
+  `nm_unidOrcamentaria` varchar(120) NOT NULL,
+  `tp_poder` char(1) NOT NULL,
+  `nu_telefone` varchar(15) NOT NULL,
+  `ds_email` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `dt_anoMes` date NOT NULL,
+  `nu_cpfFunc` varchar(11) NOT NULL,
+  `nu_matricula` varchar(20) NOT NULL,
+  PRIMARY KEY (`cd_unidOrcamentaria`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
