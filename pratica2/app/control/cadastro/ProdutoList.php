@@ -17,6 +17,7 @@ use Adianti\Widget\Dialog\TQuestion;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 use Adianti\Control\TWindow;
 use Adianti\Core\AdiantiCoreApplication;
+use Adianti\Widget\Datagrid\TDataGridActionGroup;
 
 class ProdutoList extends TPage
 {
@@ -49,13 +50,28 @@ class ProdutoList extends TPage
         $this->datagrid->addColumn($col_unid);
         $this->datagrid->addColumn($col_grupo);
 
+        
+        // creates two datagrid actions
         $action1 =  new TDataGridAction( ['ProdutoView' , 'onEdit'] , ['key' => '{sq_produto}']);
         $action2 =  new TDataGridAction([ $this, 'onDelete'], ['key' => '{sq_produto}']) ;
+        
+        $action1->setLabel('Editar');
+        $action1->setImage('fa:search #7C93CF');
+        
+        $action2->setLabel('Deletar');
+        $action2->setImage('far:trash-alt red');
 
-      
-
-        $this->datagrid->addAction($action1, 'Editar');
-        $this->datagrid->addAction($action2, 'Excluir');
+        
+        $action_group = new TDataGridActionGroup('Ações ', 'fa:th');
+        
+        $action_group->addHeader('Opçoes');
+        $action_group->addAction($action1);
+        $action_group->addAction($action2);
+        #$action_group->addSeparator();
+        #$action_group->addHeader('Another Options');
+        
+        // add the actions to the datagrid
+        $this->datagrid->addActionGroup($action_group);
 
         $this->datagrid->createModel();
 

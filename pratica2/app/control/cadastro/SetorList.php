@@ -48,7 +48,7 @@ class SetorList extends TPage
         $this->datagrid->addColumn($col_nome);
         
         // creates two datagrid actions
-        $action1 =  new TDataGridAction( ['OrgaoView' , 'onEdit'] , ['key' => '{sq_setor}']);
+        $action1 =  new TDataGridAction( ['SetorView' , 'onEdit'] , ['key' => '{sq_setor}']);
         $action2 =  new TDataGridAction([ $this, 'onDelete'], ['key' => '{sq_setor}']) ;
         
         $action1->setLabel('Editar');
