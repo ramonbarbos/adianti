@@ -40,15 +40,12 @@
     <menuitem label='Configuração'>
         <icon>fa:cog fa-fw</icon>
         <menu>
-            <menuitem label='Ver módulos'>
+            <menuitem label='Orgão'>
                 <icon>fa:cube fa-fw</icon>
-                <action>SystemModulesCheckView</action>
+                <action>OrgaoView</action>
             </menuitem>
             
-            <menuitem label='Setup PHP'>
-                <icon>fa:code fa-fw</icon>
-                <action>SystemPHPInfoView</action>
-            </menuitem>
+           
         </menu>
     </menuitem>
 </menu>

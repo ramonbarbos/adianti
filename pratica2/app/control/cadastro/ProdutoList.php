@@ -16,6 +16,7 @@ use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Dialog\TQuestion;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 use Adianti\Control\TWindow;
+use Adianti\Core\AdiantiCoreApplication;
 
 class ProdutoList extends TPage
 {
