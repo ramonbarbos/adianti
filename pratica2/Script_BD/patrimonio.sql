@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 06-Abr-2023 às 19:55
+-- Tempo de geração: 10-Abr-2023 às 21:00
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -20,6 +20,79 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `patrimonio`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `cidade`
+--
+
+DROP TABLE IF EXISTS `cidade`;
+CREATE TABLE IF NOT EXISTS `cidade` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nm_cidade` varchar(255) NOT NULL,
+  `cep` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `estado_id` varchar(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `cidade`
+--
+
+INSERT INTO `cidade` (`id`, `nm_cidade`, `cep`, `estado_id`) VALUES
+(1, 'Salvador', '41720040', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `estado`
+--
+
+DROP TABLE IF EXISTS `estado`;
+CREATE TABLE IF NOT EXISTS `estado` (
+  `id` int NOT NULL,
+  `nm_estado` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sigla` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `estado`
+--
+
+INSERT INTO `estado` (`id`, `nm_estado`, `sigla`) VALUES
+(1, 'Bahia', 'BA');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `funcionario`
+--
+
+DROP TABLE IF EXISTS `funcionario`;
+CREATE TABLE IF NOT EXISTS `funcionario` (
+  `nu_cpfFunc` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nm_funcionario` varchar(255) NOT NULL,
+  `nu_matricula` varchar(20) NOT NULL,
+  `tp_genero` varchar(1) NOT NULL,
+  `rua` varchar(120) NOT NULL,
+  `bairro` varchar(120) NOT NULL,
+  `uf` varchar(2) NOT NULL,
+  `cidade_id` int NOT NULL,
+  `nu_rg` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `orgao_emissor` varchar(5) NOT NULL,
+  PRIMARY KEY (`nu_cpfFunc`),
+  UNIQUE KEY `nu_cpfFunc` (`nu_cpfFunc`),
+  UNIQUE KEY `nu_matricula` (`nu_matricula`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `funcionario`
+--
+
+INSERT INTO `funcionario` (`nu_cpfFunc`, `nm_funcionario`, `nu_matricula`, `tp_genero`, `rua`, `bairro`, `uf`, `cidade_id`, `nu_rg`, `orgao_emissor`) VALUES
+('85778905548', 'Ramon Barbosa Souza', '2', 'M', 'Jorge Amado', 'Imbui', '1', 1, '8563552255', 'SSP');
 
 -- --------------------------------------------------------
 
@@ -43,6 +116,30 @@ CREATE TABLE IF NOT EXISTS `grupo` (
 INSERT INTO `grupo` (`id`, `cd_grupo`, `nm_grupo`, `ds_grupo`) VALUES
 (1, '5241', 'Moveis e Utensílios ', 0),
 (2, '5239', 'Veiculos', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `locatao_setor`
+--
+
+DROP TABLE IF EXISTS `locatao_setor`;
+CREATE TABLE IF NOT EXISTS `locatao_setor` (
+  `sq_lotacao` int NOT NULL AUTO_INCREMENT,
+  `nu_cpfFunc` varchar(11) NOT NULL,
+  `cd_orgaoEstru` varchar(4) NOT NULL,
+  `cd_unidEstru` varchar(4) NOT NULL,
+  `cd_setorEstru` int NOT NULL,
+  `dt_inicio` date NOT NULL,
+  PRIMARY KEY (`sq_lotacao`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `locatao_setor`
+--
+
+INSERT INTO `locatao_setor` (`sq_lotacao`, `nu_cpfFunc`, `cd_orgaoEstru`, `cd_unidEstru`, `cd_setorEstru`, `dt_inicio`) VALUES
+(1, '85778905548', '4', '4', 4, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -190,7 +287,6 @@ CREATE TABLE IF NOT EXISTS `unid_orcamentaria` (
 --
 
 INSERT INTO `unid_orcamentaria` (`nu_cnpj`, `cd_unidOrcamentaria`, `dt_ano`, `nm_unidOrcamentaria`, `nu_telefone`, `ds_email`, `dt_anoMes`) VALUES
-('00642856000160', '01', 2023, 'Camara Municipal', '99999999', 'teste@gmail.com', '202304'),
 ('00642856000160', '0101', 2023, 'Camara Municipal', '99999999', 'teste@gmail.com', '202304');
 COMMIT;
 
