@@ -24,7 +24,7 @@ class Funcionario extends TRecord {
         parent::addAttribute('orgao_emissor');
     }
 
-    public function get_unidade(){
+    public function get_cidade(){
 
         if(empty($this->cidade)){
             $this->cidade = new Cidade($this->id);
