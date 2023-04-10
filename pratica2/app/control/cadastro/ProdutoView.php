@@ -43,6 +43,7 @@ class ProdutoView extends TPage
        $sq_produto->setEditable(FALSE); 
        $sq_produto->setSize('50%');
 
+
        $this->form->addFields( [new TLabel('Codigo')], [$sq_produto], [new TLabel('UND')], [$sq_unidade]);
        $this->form->addFields( [new TLabel('Grupo')], [$cd_grupo]);
        $this->form->addFields( [new TLabel('Nome')], [$nm_produto]);
