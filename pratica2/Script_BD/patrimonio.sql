@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 10-Abr-2023 às 21:00
+-- Tempo de geração: 11-Abr-2023 às 17:52
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -132,14 +132,15 @@ CREATE TABLE IF NOT EXISTS `locatao_setor` (
   `cd_setorEstru` int NOT NULL,
   `dt_inicio` date NOT NULL,
   PRIMARY KEY (`sq_lotacao`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `locatao_setor`
 --
 
 INSERT INTO `locatao_setor` (`sq_lotacao`, `nu_cpfFunc`, `cd_orgaoEstru`, `cd_unidEstru`, `cd_setorEstru`, `dt_inicio`) VALUES
-(1, '85778905548', '4', '4', 4, '0000-00-00');
+(1, '85778905548', '01', '0101', 1, '0000-00-00'),
+(2, '85778905548', '02', '02', 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -164,7 +165,8 @@ CREATE TABLE IF NOT EXISTS `orgao` (
 --
 
 INSERT INTO `orgao` (`nu_cnpj`, `cd_orgao`, `dt_ano`, `nm_orgao`, `tp_poder`, `nu_telefone`, `ds_email`, `dt_anoMes`) VALUES
-('00642856000160', '01', 2023, 'Câmera Municipal', '2', '99999999', 'teste@gmail.com', '202304');
+('00642856000160', '01', 2023, 'Câmera Municipal', '2', '99999999', 'teste@gmail.com', '202304'),
+('00642856000160', '02', 2023, 'Gabinete do Prefeito', '2', '99999999', 'teste@gmail.com', '202304');
 
 -- --------------------------------------------------------
 
@@ -287,6 +289,7 @@ CREATE TABLE IF NOT EXISTS `unid_orcamentaria` (
 --
 
 INSERT INTO `unid_orcamentaria` (`nu_cnpj`, `cd_unidOrcamentaria`, `dt_ano`, `nm_unidOrcamentaria`, `nu_telefone`, `ds_email`, `dt_anoMes`) VALUES
+('00642856000160', '02', 2023, 'Gabinete do Prefeito', '99999999', 'teste@gmail.com', '202304'),
 ('00642856000160', '0101', 2023, 'Camara Municipal', '99999999', 'teste@gmail.com', '202304');
 COMMIT;
 

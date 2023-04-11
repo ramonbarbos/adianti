@@ -62,8 +62,7 @@ class LotacaoSetorView extends TPage
         
 
 
-        #$this->form->addAction('Save', new TAction(array($this, 'onSave')), 'fa:save');
-        $this->form->addAction('Salvar', new TAction( [$this, 'onSave'])); //POST
+      
 
      
         $subform = new BootstrapFormBuilder;
@@ -74,24 +73,24 @@ class LotacaoSetorView extends TPage
         $subform->appendPage( 'Dados' );
 
 
-        $customer_orgao   = new TDBSeekButton('cd_orgaoEstru', 'sample', 'form', 'SetorOrgaoUnid', 'cd_orgao');
-        $customer_nmOrgao = new TEntry('orgao->cd_orgao');
-        $customer_orgao->setDisplayMask('{cd_orgao} - {orgao->nm_orgao}');
+        $customer_orgao   = new TDBSeekButton('cd_orgaoEstru', 'sample', 'form', 'Orgao', 'cd_orgao');
+        $customer_nmOrgao = new TEntry('nm_orgao');
+        $customer_orgao->setDisplayMask('{cd_orgao} - {nm_orgao}');
         $customer_orgao->setDisplayLabel('Orgão');
         $customer_orgao->setAuxiliar($customer_nmOrgao);
         $customer_nmOrgao->setEditable(FALSE);
         $customer_orgao->setSize(100);
-
-        $row = $subform->addFields( [new TLabel('Data Inicio')], [$dt_inicio]);
         $dt_inicio->setMask('dd/mm/yyyy');
+        $row = $subform->addFields( [new TLabel('Data Inicio')], [$dt_inicio]);
+       
         $row->layout = ['col-sm-2', 'col-sm-0', 'col-sm-0'];
 
         $row = $subform->addFields( [ new TLabel('Orgão'),      $customer_orgao ]);
         $row->layout = ['col-sm-6', 'col-sm-3', 'col-sm-3'];
 
-        $customer_unid   = new TDBSeekButton('cd_unidEstru', 'sample', 'form', 'SetorOrgaoUnid', 'cd_unidOrcamentaria');
+        $customer_unid   = new TDBSeekButton('cd_unidEstru', 'sample', 'form', 'UnidOrcamentaria', 'cd_unidOrcamentaria');
         $customer_nmUnid = new TEntry('nm_unidOrcamentaria');
-        $customer_unid->setDisplayMask('{cd_unidOrcamentaria} - {unid_orcamentaria->nm_unidOrcamentaria}');
+        $customer_unid->setDisplayMask('{cd_unidOrcamentaria} - {nm_unidOrcamentaria}');
         $customer_unid->setDisplayLabel('Unid Orca.');
         $customer_unid->setAuxiliar($customer_nmUnid);
         $customer_nmUnid->setEditable(FALSE);
@@ -100,9 +99,9 @@ class LotacaoSetorView extends TPage
         $row = $subform->addFields( [ new TLabel('Unid Orca.'),      $customer_unid ]);
         $row->layout = ['col-sm-6', 'col-sm-3', 'col-sm-3'];
 
-        $customer_setor   = new TDBSeekButton('cd_setorEstru', 'sample', 'form', 'SetorOrgaoUnid', 'sq_setor');
+        $customer_setor   = new TDBSeekButton('cd_setorEstru', 'sample', 'form', 'Setor', 'sq_setor');
         $customer_nmSetor = new TEntry('nm_setor');
-        $customer_setor->setDisplayMask('{sq_setor} - {setor->nm_setor}');
+        $customer_setor->setDisplayMask('{sq_setor} - {nm_setor}');
         $customer_setor->setDisplayLabel('Setor.');
         $customer_setor->setAuxiliar($customer_nmSetor);
         $customer_nmSetor->setEditable(FALSE);
@@ -111,19 +110,25 @@ class LotacaoSetorView extends TPage
         $row = $subform->addFields( [ new TLabel('Setor'),      $customer_setor ]);
         $row->layout = ['col-sm-6', 'col-sm-3', 'col-sm-3'];
 
+        $this->form->addAction('Salvar', new TAction( [$this, 'onSave'])); //POST
+        $this->form->addActionLink('Limpar', new TAction( [$this, 'onClear']));
+
         $this->form->addContent( [$subform] );
         
         // DataGrid - Listagem
     
 
+
         $this->datagrid =  new BootstrapDatagridWrapper(new TDataGrid);
         $this->datagrid->width = '100%';
 
-        $col_id = new TDataGridColumn('orgao->nm_orgao', 'Orgão', 'right', '33%');
-        $col_nome = new TDataGridColumn('unid_orcamentaria->nm_unidOrcamentaria', 'Unid.', 'left', '33%');
-        $col_setor = new TDataGridColumn('setor->nm_setor', 'Setor', 'center', '33%');
-        $col_date = new TDataGridColumn('dt_inicio', 'Inicio', 'right', '33%');
 
+        $col_cpf = new TDataGridColumn('nu_cpfFunc', 'CPF', 'left', '20%');
+        $col_id = new TDataGridColumn('orgao->nm_orgao', 'Orgão', 'left', '20%');
+        $col_nome = new TDataGridColumn('unid_orcamentaria->nm_unidOrcamentaria', 'Unid.', 'left', '20%');
+        $col_setor = new TDataGridColumn('setor->nm_setor', 'Setor', 'left', '20%');
+        $col_date = new TDataGridColumn('dt_inicio', 'Inicio', 'left', '20%');
+        $this->datagrid->addColumn($col_cpf);
         $this->datagrid->addColumn($col_id);
         $this->datagrid->addColumn($col_nome);
         $this->datagrid->addColumn($col_setor);
@@ -221,7 +226,12 @@ class LotacaoSetorView extends TPage
      
     }
 
-      //Limpeza de Formulario
+       //Limpeza de Formulario
+    public  function onClear($param){
+
+        $this->form->clear(true);
+     
+    }
       public  function onDelete($param){
         $action =  new TAction( [__CLASS__, 'Delete'] );
         $action->setParameters($param);

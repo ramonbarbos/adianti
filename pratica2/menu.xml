@@ -38,6 +38,10 @@
                 <icon>fa:life-ring fa-fw</icon>
                 <action>FuncionarioView</action>
             </menuitem>
+            <menuitem label='Lotacao Setor'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>LotacaoSetorView</action>
+            </menuitem>
         </menu>
     </menuitem>
    

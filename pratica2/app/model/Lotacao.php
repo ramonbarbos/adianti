@@ -5,7 +5,7 @@ use Adianti\Database\TRecord;
 class Lotacao extends TRecord {
 
     const TABLENAME = 'locatao_setor';
-    const PRIMARYKEY = 'sq_lotacao ';
+    const PRIMARYKEY = 'sq_lotacao';
     const IDPOLICY = 'max';
 
     private $func;
@@ -33,7 +33,7 @@ class Lotacao extends TRecord {
     public function get_setor(){
 
         if(empty($this->setor)){
-            $this->setor = new Setor($this->sq_setor);
+            $this->setor = new Setor($this->cd_setorEstru);
         }
        return $this->setor;
     }
@@ -41,14 +41,14 @@ class Lotacao extends TRecord {
     public function get_orgao(){
 
         if(empty($this->orgao)){
-            $this->orgao = new Orgao($this->cd_orgao);
+            $this->orgao = new Orgao($this->cd_orgaoEstru);
         }
        return $this->orgao;
     }
     public function get_unid_orcamentaria(){
 
         if(empty($this->unidOrc)){
-            $this->unidOrc = new UnidOrcamentaria($this->cd_unidOrcamentaria);
+            $this->unidOrc = new UnidOrcamentaria($this->cd_unidEstru);
         }
        return $this->unidOrc;
     }
