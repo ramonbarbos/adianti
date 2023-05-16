@@ -79,11 +79,11 @@ class GrupoList extends TPage
         $column_nome->setAction(new TAction([$this, 'onReload']), ['order'=> 'nome']);
 
         $action1 = new TDataGridAction(['GrupoForm', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
-        $action2 = new TDataGridAction([$this, 'onDelete'], ['id'=> '{id}']);
+        $action2 = new TDataGridAction([$this, 'onDeleteCollection'], ['id'=> '{id}']);
 
         //Adicionando a ação na tela
         $this->datagrid->addAction($action1, _t('Edit'), 'fa:edit blue' );
-        $this->datagrid->addAction($action2, _t('Delete'), 'fa:delete blue' );
+        $this->datagrid->addAction($action2, _t('Delete'), 'fa:delete red' );
 
         //Criar datagrid 
         $this->datagrid->createModel();

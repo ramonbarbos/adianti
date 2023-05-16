@@ -32,7 +32,7 @@ class GrupoForm extends TPage
 
         parent::__construct();
 
-        parent::setTargetContainer('adiant_right_panel');
+        parent::setTargetContainer('adianti_right_panel');
         $this->setAfterSaveAction(new TAction(['GrupoList', 'onReload'], ['register_state'=> 'true']));
 
         $this->setDatabase('sample');
@@ -78,8 +78,9 @@ class GrupoForm extends TPage
 
     }
     //Metodo fechar
-    public  function onClose($param){
-        TScript::create("Tamplate.closeRightPanel()");
+    public static function onClose($param)
+    {
+        TScript::create("Template.closeRightPanel()");
     }
 
     
