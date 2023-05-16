@@ -1,0 +1,22 @@
+<menu>
+    
+    <menuitem label='Cadastros'>
+        <icon>fa:home fa-fw</icon>
+        <menu>
+            <menuitem label='Produto'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>ProdutoView</action>
+            </menuitem>
+          
+        </menu>
+    </menuitem>
+   
+    <menuitem label='Configuração'>
+        <icon>fa:cog fa-fw</icon>
+        <menu>
+           
+              
+           
+        </menu>
+    </menuitem>
+</menu>
