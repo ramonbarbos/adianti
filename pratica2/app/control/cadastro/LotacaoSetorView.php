@@ -81,6 +81,7 @@ class LotacaoSetorView extends TPage
         $customer_nmOrgao->setEditable(FALSE);
         $customer_orgao->setSize(100);
         $dt_inicio->setMask('dd/mm/yyyy');
+        $dt_inicio->setDatabaseMask('yyyy-mm-dd');
         $row = $subform->addFields( [new TLabel('Data Inicio')], [$dt_inicio]);
        
         $row->layout = ['col-sm-2', 'col-sm-0', 'col-sm-0'];
