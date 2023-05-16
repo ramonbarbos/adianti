@@ -22,7 +22,7 @@ use Adianti\Widget\Wrapper\TDBSeekButton;
 use Adianti\Wrapper\BootstrapFormBuilder;
 
 
-class GrupoForm extends TPage
+class EstadoForm extends TPage
 {
     private $form;
 
@@ -33,33 +33,37 @@ class GrupoForm extends TPage
         parent::__construct();
 
         parent::setTargetContainer('adianti_right_panel');
-        $this->setAfterSaveAction(new TAction(['GrupoList', 'onReload'], ['register_state'=> 'true']));
+        $this->setAfterSaveAction(new TAction(['EstadoList', 'onReload'], ['register_state'=> 'true']));
 
         $this->setDatabase('sample');
-        $this->setActiveRecord('Grupo');
+        $this->setActiveRecord('Estado');
 
         //Criação do formulario
-        $this->form = new BootstrapFormBuilder('form_grupo');
-        $this->form->setFormTitle('Grupo');
+        $this->form = new BootstrapFormBuilder('form_estado');
+        $this->form->setFormTitle('Estado');
         $this->form->setClientValidation(true);
         $this->form->setColumnClasses(2, ['col-sm-5 col-lg-4', 'col-sm-7 col-lf-8]']);
 
-        //criar fields para o form
-         //Criação de fields
-         $id = new TEntry('id');
-         $nome = new TEntry('nome');
- 
-         //Add filds na tela
-         $this->form->addFields( [new TLabel('Id')], [ $id ] );
-         $this->form->addFields( [new TLabel('Nome')], [ $nome ] );
-
+      
+           //Criação de fields
+           $id = new TEntry('id');
+           $uf = new TEntry('uf');
+           $nome = new TEntry('nome');
+   
+           //Add filds na tela
+           $this->form->addFields( [new TLabel('Id')], [ $id ] );
+           $this->form->addFields( [new TLabel('UF')], [ $uf ] );
+           $this->form->addFields( [new TLabel('Nome')], [ $nome ] );
+   
+           //Tamanho dos fields
+           $id->setSize('100%');
+           $uf->setSize('100%');
+           $nome->setSize('100%');
+   
          $nome->addValidation('Nome', new TRequiredValidator);
 
          $id->setEditable(false);
 
-         //Tamanho dos fields
-        $id->setSize('100%');
-        $nome->setSize('100%');
 
         $btn =  $this->form->addAction( _t('Save'), new TAction([$this, 'onSave']), 'fa:plus green' );
         $btn->class = 'btn btn-sm btn-primary';

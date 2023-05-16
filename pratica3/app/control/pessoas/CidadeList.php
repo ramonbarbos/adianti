@@ -11,13 +11,15 @@ use Adianti\Widget\Datagrid\TDataGridAction;
 use Adianti\Widget\Datagrid\TDataGridColumn;
 use Adianti\Widget\Datagrid\TPageNavigation;
 use Adianti\Widget\Dialog\TMessage;
+use Adianti\Widget\Form\TCombo;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TLabel;
 use Adianti\Widget\Util\TDropDown;
+use Adianti\Widget\Wrapper\TDBCombo;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 use Adianti\Wrapper\BootstrapFormBuilder;
 
-class GrupoList extends TPage
+class CidadeList extends TPage
 {
     private $form;
     private $datagrid;
@@ -34,35 +36,43 @@ class GrupoList extends TPage
 
         //Conexão com a tabela
         $this->setDatabase('sample');
-        $this->setActiveRecord('Grupo');
+        $this->setActiveRecord('Cidade');
         $this->setDefaultOrder('id', 'asc');
         $this->setLimit(10);
 
         $this->addFilterField('id', '=', 'id');
         $this->addFilterField('nome', 'like', 'nome');
+        $this->addFilterField('cod_ibge', 'like', 'cod_ibge');
+        $this->addFilterField('estado', 'like', 'estado');
 
         //Criação do formulario 
-        $this->form = new BootstrapFormBuilder('formulario grupo');
-        $this->form->setFormTitle('Grupo');
+        $this->form = new BootstrapFormBuilder('formulario estado');
+        $this->form->setFormTitle('Cidade');
 
         //Criação de fields
         $id = new TEntry('id');
         $nome = new TEntry('nome');
+        $cod_ibge = new TEntry('cod_ibge');
+        $estado = new TDBCombo('estado', 'sample', 'Estado','id',  'id');
 
         //Add filds na tela
         $this->form->addFields( [new TLabel('Id')], [ $id ] );
         $this->form->addFields( [new TLabel('Nome')], [ $nome ] );
+        $this->form->addFields( [new TLabel('Codigo IBGE')], [ $cod_ibge ] );
+        $this->form->addFields( [new TLabel('Estado')], [ $estado ] );
 
         //Tamanho dos fields
         $id->setSize('100%');
         $nome->setSize('100%');
+        $cod_ibge->setSize('100%');
+        $estado->setSize('100%');
 
         $this->form->setData( TSession::getValue( __CLASS__.'_filter_data') );
 
         //Adicionar field de busca
         $btn = $this->form->addAction(_t('Find'), new TAction([$this, 'onSearch']), 'fa:search');
         $btn->class = 'btn btn-sm btn-primary';
-        $this->form->addActionLink(_t('New'), new TAction(['GrupoForm', 'onEdit'], ['register_state' => 'false']), 'fa:plus green'  );
+        $this->form->addActionLink(_t('New'), new TAction(['CidadeForm', 'onEdit'], ['register_state' => 'false']), 'fa:plus green'  );
 
         //Criando a data grid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
@@ -70,17 +80,21 @@ class GrupoList extends TPage
 
         //Criando colunas da datagrid
         $column_id = new TDataGridColumn('id', 'Id', 'center', '10%');
+        $column_ibge = new TDataGridColumn('cod_ibge ', 'IBGE', 'left');
         $column_nome = new TDataGridColumn('nome', 'Nome', 'left');
+        $column_estado = new TDataGridColumn('estado->nome', 'Estado', 'left');
 
         //add coluna da datagrid
         $this->datagrid->addColumn($column_id);
+        $this->datagrid->addColumn($column_ibge);
         $this->datagrid->addColumn($column_nome);
+        $this->datagrid->addColumn($column_estado);
 
         //Criando ações para o datagrid
         $column_id->setAction(new TAction([$this, 'onReload']), ['order'=> 'id']);
         $column_nome->setAction(new TAction([$this, 'onReload']), ['order'=> 'nome']);
 
-        $action1 = new TDataGridAction(['GrupoForm', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
+        $action1 = new TDataGridAction(['CidadeForm', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
         $action2 = new TDataGridAction([ $this, 'onDelete'], ['id'=> '{id}']);
 
         //Adicionando a ação na tela

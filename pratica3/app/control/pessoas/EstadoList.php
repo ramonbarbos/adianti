@@ -17,7 +17,7 @@ use Adianti\Widget\Util\TDropDown;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 use Adianti\Wrapper\BootstrapFormBuilder;
 
-class GrupoList extends TPage
+class EstadoList extends TPage
 {
     private $form;
     private $datagrid;
@@ -34,27 +34,31 @@ class GrupoList extends TPage
 
         //Conexão com a tabela
         $this->setDatabase('sample');
-        $this->setActiveRecord('Grupo');
+        $this->setActiveRecord('Estado');
         $this->setDefaultOrder('id', 'asc');
         $this->setLimit(10);
 
         $this->addFilterField('id', '=', 'id');
+        $this->addFilterField('uf', 'like', 'nome');
         $this->addFilterField('nome', 'like', 'nome');
 
         //Criação do formulario 
-        $this->form = new BootstrapFormBuilder('formulario grupo');
-        $this->form->setFormTitle('Grupo');
+        $this->form = new BootstrapFormBuilder('formulario estado');
+        $this->form->setFormTitle('Estado');
 
         //Criação de fields
         $id = new TEntry('id');
+        $uf = new TEntry('uf');
         $nome = new TEntry('nome');
 
         //Add filds na tela
         $this->form->addFields( [new TLabel('Id')], [ $id ] );
+        $this->form->addFields( [new TLabel('UF')], [ $uf ] );
         $this->form->addFields( [new TLabel('Nome')], [ $nome ] );
 
         //Tamanho dos fields
         $id->setSize('100%');
+        $uf->setSize('100%');
         $nome->setSize('100%');
 
         $this->form->setData( TSession::getValue( __CLASS__.'_filter_data') );
@@ -62,7 +66,7 @@ class GrupoList extends TPage
         //Adicionar field de busca
         $btn = $this->form->addAction(_t('Find'), new TAction([$this, 'onSearch']), 'fa:search');
         $btn->class = 'btn btn-sm btn-primary';
-        $this->form->addActionLink(_t('New'), new TAction(['GrupoForm', 'onEdit'], ['register_state' => 'false']), 'fa:plus green'  );
+        $this->form->addActionLink(_t('New'), new TAction(['EstadoForm', 'onEdit'], ['register_state' => 'false']), 'fa:plus green'  );
 
         //Criando a data grid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
@@ -70,17 +74,20 @@ class GrupoList extends TPage
 
         //Criando colunas da datagrid
         $column_id = new TDataGridColumn('id', 'Id', 'center', '10%');
+        $column_uf = new TDataGridColumn('uf', 'UF', 'left');
         $column_nome = new TDataGridColumn('nome', 'Nome', 'left');
 
         //add coluna da datagrid
         $this->datagrid->addColumn($column_id);
+        $this->datagrid->addColumn($column_uf);
         $this->datagrid->addColumn($column_nome);
 
         //Criando ações para o datagrid
         $column_id->setAction(new TAction([$this, 'onReload']), ['order'=> 'id']);
+        $column_uf->setAction(new TAction([$this, 'onReload']), ['order'=> 'uf']);
         $column_nome->setAction(new TAction([$this, 'onReload']), ['order'=> 'nome']);
 
-        $action1 = new TDataGridAction(['GrupoForm', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
+        $action1 = new TDataGridAction(['EstadoForm', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
         $action2 = new TDataGridAction([ $this, 'onDelete'], ['id'=> '{id}']);
 
         //Adicionando a ação na tela

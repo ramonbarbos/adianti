@@ -1,13 +1,20 @@
 <menu>
     
-    <menuitem label='Cadastros'>
-        <icon>fa:home fa-fw</icon>
+    <menuitem label='Pessoas'>
+        <icon>fa:users</icon>
         <menu>
-            <menuitem label='Produto'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>ProdutoView</action>
+            <menuitem label='Grupo'>
+                <icon>fa:square o</icon>
+                <action>GrupoList</action>
             </menuitem>
-          
+             <menuitem label='Estado'>
+                <icon>fa:square o</icon>
+                <action>EstadoList</action>
+            </menuitem>
+             <menuitem label='Cidade'>
+                <icon>fa:square o</icon>
+                <action>CidadeList</action>
+            </menuitem>
         </menu>
     </menuitem>
    
