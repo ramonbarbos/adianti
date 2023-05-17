@@ -15,6 +15,10 @@
                 <icon>fa:square o</icon>
                 <action>CidadeList</action>
             </menuitem>
+             <menuitem label='Papel'>
+                <icon>fa:square o</icon>
+                <action>PapelList</action>
+            </menuitem>
         </menu>
     </menuitem>
    
