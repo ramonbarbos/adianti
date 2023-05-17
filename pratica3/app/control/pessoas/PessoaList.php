@@ -41,109 +41,113 @@ class PessoaList extends TPage
         $this->setDefaultOrder('id', 'asc');
         $this->setLimit(10);
 
-        $this->addFilterField('id', '=', 'id');
-        $this->addFilterField('nome_fantasia', 'like', 'nome_fantasia');
-        $this->addFilterField('fone', 'like', 'fone');
-        $this->addFilterField('email', 'like', 'email');
-        $this->addFilterField('grupo_id', 'like', 'grupo_id');
-
-        //Criação do formulario 
-        $this->form = new BootstrapFormBuilder('formulario pessoa');
+        
+        $this->addFilterField('id', '=', 'id'); // filterField, operator, formField
+        $this->addFilterField('nome_fantasia', 'like', 'nome_fantasia'); // filterField, operator, formField
+        $this->addFilterField('fone', 'like', 'fone'); // filterField, operator, formField
+        $this->addFilterField('email', 'like', 'email'); // filterField, operator, formField
+        $this->addFilterField('grupo_id', '=', 'grupo_id'); // filterField, operator, formField
+        
+        // creates the form
+        $this->form = new BootstrapFormBuilder('form_search_Pessoa');
         $this->form->setFormTitle('Pessoa');
+        
 
-        //Criação de fields
+        // create the form fields
         $id = new TEntry('id');
         $nome_fantasia = new TEntry('nome_fantasia');
         $fone = new TEntry('fone');
         $email = new TEntry('email');
-        $grupo_id = new TDBUniqueSearch('grupo_id', 'sample', 'Grupo','id',  'nome');
+        $grupo_id = new TDBUniqueSearch('grupo_id', 'sample', 'Grupo', 'id', 'nome');
+        $grupo_id->setMinLength(0);
 
-        //Add filds na tela
-        $this->form->addFields( [new TLabel('Id')], [ $id ] );
-        $this->form->addFields( [new TLabel('Nome Fantasia')], [ $nome_fantasia ] );
-        $this->form->addFields( [new TLabel('Celular')], [ $fone ] );
-        $this->form->addFields( [new TLabel('Emal')], [ $email ] );
-        $this->form->addFields( [new TLabel('Grupo')], [ $grupo_id ] );
+        // add the fields
+        $this->form->addFields( [ new TLabel('Id') ], [ $id ] );
+        $this->form->addFields( [ new TLabel('Nome Fantasia') ], [ $nome_fantasia ] );
+        $this->form->addFields( [ new TLabel('Fone') ], [ $fone ] );
+        $this->form->addFields( [ new TLabel('Email') ], [ $email ] );
+        $this->form->addFields( [ new TLabel('Grupo') ], [ $grupo_id ] );
 
-        //Tamanho dos fields
+
+        // set sizes
         $id->setSize('100%');
         $nome_fantasia->setSize('100%');
         $fone->setSize('100%');
         $email->setSize('100%');
         $grupo_id->setSize('100%');
 
-        $this->form->setData( TSession::getValue( __CLASS__.'_filter_data') );
-
-        //Adicionar field de busca
+        
+        // keep the form filled during navigation with session data
+        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data') );
+        
+        // add the search form actions
         $btn = $this->form->addAction(_t('Find'), new TAction([$this, 'onSearch']), 'fa:search');
         $btn->class = 'btn btn-sm btn-primary';
-        $this->form->addActionLink(_t('New'), new TAction(['CidadeForm', 'onEdit'], ['register_state' => 'false']), 'fa:plus green'  );
-
-        //Criando a data grid
+        $this->form->addActionLink(_t('New'), new TAction(['PessoaForm', 'onEdit']), 'fa:plus green');
+        
+        // creates a Datagrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
         $this->datagrid->style = 'width: 100%';
+        //$this->datagrid->datatable = 'true';
+        // $this->datagrid->enablePopover('Popover', 'Hi <b> {name} </b>');
+        
 
-        //Criando colunas da datagrid
-        $column_id = new TDataGridColumn('id', 'Id', 'center', '10%');
-        $column_nome = new TDataGridColumn('nome_fantasia ', 'Nome', 'left');
-        $column_fone = new TDataGridColumn('fone', 'Celular', 'left');
+        // creates the datagrid columns
+        $column_id = new TDataGridColumn('id', 'Id', 'left');
+        $column_nome_fantasia = new TDataGridColumn('nome_fantasia', 'Nome Fantasia', 'left');
+        $column_fone = new TDataGridColumn('fone', 'Fone', 'left');
         $column_email = new TDataGridColumn('email', 'Email', 'left');
-        $column_grupo = new TDataGridColumn('grupo->nome', 'Grupo', 'left');
-
-
+        $column_grupo_id = new TDataGridColumn('grupo->nome', 'Grupo', 'left');
+        
         $column_fone->enableAutoHide(500);
         $column_email->enableAutoHide(500);
-        $column_grupo->enableAutoHide(500);
-
-        //add coluna da datagrid
+        $column_grupo_id->enableAutoHide(500);
+        
+        // add the columns to the DataGrid
         $this->datagrid->addColumn($column_id);
-        $this->datagrid->addColumn($column_nome);
+        $this->datagrid->addColumn($column_nome_fantasia);
         $this->datagrid->addColumn($column_fone);
         $this->datagrid->addColumn($column_email);
-        $this->datagrid->addColumn($column_grupo);
+        $this->datagrid->addColumn($column_grupo_id);
+        
+        $column_id->setAction(new TAction([$this, 'onReload']), ['order' => 'id']);
+        $column_nome_fantasia->setAction(new TAction([$this, 'onReload']), ['order' => 'nome_fantasia']);
 
-        //Criando ações para o datagrid
-        $column_id->setAction(new TAction([$this, 'onReload']), ['order'=> 'id']);
-        $column_nome->setAction(new TAction([$this, 'onReload']), ['order'=> 'nome_fantasia']);
-
-        $action1 = new TDataGridAction(['CidadeForm', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
-        $action2 = new TDataGridAction([ $this, 'onDelete'], ['id'=> '{id}']);
-        $action3 = new TDataGridAction([ 'PessoaFormView', 'onEdit'], ['id'=> '{id}', 'register_state' => 'false']);
-
-        //Adicionando a ação na tela
-        $this->datagrid->addAction($action1, _t('Edit'), 'fa:edit blue' );
-        $this->datagrid->addAction($action2, _t('Delete'), 'fa:trash-alt red' );
-        $this->datagrid->addAction($action3, _t('View'), 'fa:search gray' );
-
-
-        //Criar datagrid 
+        
+        $action1 = new TDataGridAction(['PessoaFormView', 'onEdit'], ['id'=>'{id}', 'register_state' => 'false']);
+        $action2 = new TDataGridAction(['PessoaForm', 'onEdit'], ['id'=>'{id}']);
+        $action3 = new TDataGridAction([$this, 'onDelete'], ['id'=>'{id}', 'register_state' => 'false']);
+        
+        $this->datagrid->addAction($action1, _t('View'),   'fa:search gray');
+        $this->datagrid->addAction($action2, _t('Edit'),   'far:edit blue');
+        $this->datagrid->addAction($action3 ,_t('Delete'), 'far:trash-alt red');
+        
+        // create the datagrid model
         $this->datagrid->createModel();
-
-        //Criação de paginador
+        
+        // creates the page navigation
         $this->pageNavigation = new TPageNavigation;
         $this->pageNavigation->setAction(new TAction([$this, 'onReload']));
-
-      
-
-        //Enviar para tela
+        
         $panel = new TPanelGroup('', 'white');
         $panel->add($this->datagrid);
         $panel->addFooter($this->pageNavigation);
-
-          //Exportar
-          $drodown = new TDropDown('Exportar', 'fa:list');
-          $drodown->setPullSide('right');
-          $drodown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
-          $drodown->addAction(_t('Save as CSV'), new TAction([$this, 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']), 'fa:table green');
-          $drodown->addAction(_t('Save as PDF'), new TAction([$this, 'onExportPDF'], ['register_state' => 'false',  'static'=>'1']), 'fa:file-pdf red');
-          $panel->addHeaderWidget( $drodown);
-
-        //Vertical container
+        
+        // header actions
+        $dropdown = new TDropDown(_t('Export'), 'fa:list');
+        $dropdown->setPullSide('right');
+        $dropdown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
+        $dropdown->addAction( _t('Save as CSV'), new TAction([$this, 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']), 'fa:table blue' );
+        $dropdown->addAction( _t('Save as PDF'), new TAction([$this, 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']), 'far:file-pdf red' );
+        $panel->addHeaderWidget( $dropdown );
+        
+        // vertical box container
         $container = new TVBox;
         $container->style = 'width: 100%';
+        // $container->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
         $container->add($this->form);
         $container->add($panel);
-    
+        
         parent::add($container);
 
        
