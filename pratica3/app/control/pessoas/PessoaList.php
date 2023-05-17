@@ -134,11 +134,11 @@ class PessoaList extends TPage
         $panel->addFooter($this->pageNavigation);
         
         // header actions
-        $dropdown = new TDropDown(_t('Export'), 'fa:list');
+        $dropdown = new TDropDown('Exportar', 'fa:list');
         $dropdown->setPullSide('right');
         $dropdown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
-        $dropdown->addAction( _t('Save as CSV'), new TAction([$this, 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']), 'fa:table blue' );
-        $dropdown->addAction( _t('Save as PDF'), new TAction([$this, 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']), 'far:file-pdf red' );
+        $dropdown->addAction( 'Salvar como CSV', new TAction([$this, 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']), 'fa:table blue' );
+        $dropdown->addAction( 'Salvar como PDF', new TAction([$this, 'onExportPDF'], ['register_state' => 'false', 'static'=>'1']), 'far:file-pdf red' );
         $panel->addHeaderWidget( $dropdown );
         
         // vertical box container

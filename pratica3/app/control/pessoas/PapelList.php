@@ -106,8 +106,8 @@ class PapelList extends TPage
           $drodown = new TDropDown('Exportar', 'fa:list');
           $drodown->setPullSide('right');
           $drodown->setButtonClass('btn btn-default waves-effect dropdown-toggle');
-          $drodown->addAction(_t('Save as CSV'), new TAction([$this, 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']), 'fa:table green');
-          $drodown->addAction(_t('Save as PDF'), new TAction([$this, 'onExportPDF'], ['register_state' => 'false',  'static'=>'1']), 'fa:file-pdf red');
+          $drodown->addAction('Salvar como CSV', new TAction([$this, 'onExportCSV'], ['register_state' => 'false', 'static'=>'1']), 'fa:table green');
+          $drodown->addAction('Salvar como PDF', new TAction([$this, 'onExportPDF'], ['register_state' => 'false',  'static'=>'1']), 'fa:file-pdf red');
           $panel->addHeaderWidget( $drodown);
 
         //Vertical container
